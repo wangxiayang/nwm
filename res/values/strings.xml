@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">wordmaster</string>
+    <string name="input_article">input article</string>
+    <string name="show_words">show results</string>
+    <string name="wordinfo">word info</string>
+    <string name="newly_added">newly added</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="menu_action_settings">Settings</string>
+    <string name="menu_saveLibraries">Save</string>
+    <string name="menu_quit">Quit</string>
+    <string name="menu_toMainActivity">Back to main page</string>
+    <string name="menu_newlyAdded">Newly added words</string>
+    
+    <!-- in MainActivity -->
+    <string name="main_hint1">Hello!</string>
+    <string name="main_hint2">Please select one from the followings to provide me the English text you are struggling with.</string>
+    <string name="main_article">an article</string>
+    <string name="main_sentence">a sentence</string>
+    <string name="main_word">a SINGLE word</string>
+    
+    <!-- in InputArticleActivity -->
+    <string name="input_article_hint1">Paste or Input</string>
+    <string name="input_article_hint2">Please input or PASTE the whole article into the following editable box.</string>
+    <string name="input_article_submit">submit</string>
+    
+    <!-- in WordResultInfoActivity -->
+    <string name="wordresultinfo_submit">submit</string>
+    <string name="wordresultinfo_ignore">ignore</string>
+    <string name="wordresultinfo_alreadyKnown">I knew it!</string>
+    
+    <!-- in WordInfoActivity -->
+    <string name="wordinfo_alreadyKnown">I\'ve known it!</string>
+
+</resources>

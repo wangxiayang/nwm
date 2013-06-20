@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="20dp"
+    android:orientation="vertical" >
+    
+    <TextView android:id="@+id/wordresultinfo_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:paddingLeft="20dp"/>
+    <RadioGroup android:id="@+id/wordresultinfo_forms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+    </RadioGroup>
+    
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    
+	    <Button android:id="@+id/wordresultinfo_submit"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/wordresultinfo_submit"/>
+	    <Button android:id="@+id/wordresultinfo_ignore"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/wordresultinfo_ignore"/>
+	    <Button android:id="@+id/wordresultinfo_alreadyKnown"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/wordresultinfo_alreadyKnown"/>
+    </LinearLayout>
+    
+    <ListView android:id="@+id/wordresultinfo_sentences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+    </ListView>
+
+</LinearLayout>
