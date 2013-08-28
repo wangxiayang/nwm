@@ -11,10 +11,11 @@ public class Word implements Comparable< Word >, Serializable {
 	private Date in_time;
     private WordState state;
 
-	public Word( String content ) {
+	public Word( String content, WordState state ) {
 		this.setContent(content);
 		this.sentences = new ArrayList< String >();
 		this.in_time = new Date();
+        this.state = state;
 	}
 
 	public String getContent() {
@@ -52,7 +53,7 @@ public class Word implements Comparable< Word >, Serializable {
     public void setState( WordState state ) {
         this.state = state;
     }
-	
+
 	@Override
 	public int compareTo( Word w ) {
 		return content.compareTo( w.getContent() );

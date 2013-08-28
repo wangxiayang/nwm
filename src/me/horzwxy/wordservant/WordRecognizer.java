@@ -35,11 +35,11 @@ public class WordRecognizer {
      * @param word
      * @return
      */
-	private WordState analyze( String word ) {
-		this.possibleForms = findPossibleForms( word );
-		for( String form: this.possibleForms ) {
+	public WordState analyze( String word ) {
+		ArrayList< String > possibleForms = findPossibleForms( word );
+		for( String form: possibleForms ) {
 			// If one of the forms is tracked, break the loop immediately.
-			if( wordLib.contains( form ) ) {
+			if( wordLib.getWordState( form ) != WordState.Untracked ) {
 				return wordLib.getWordState( form );
 			}
 		}

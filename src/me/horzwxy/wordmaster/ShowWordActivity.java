@@ -54,56 +54,7 @@ public class ShowWordActivity extends Activity {
 				
 				String[] sentences = line.split( "[\\.\\?!]" );
 				for( int m = 0; m < sentences.length; m++ ) {
-					String[] rawWords = sentences[ m ].split( " " );	// split by blanks
-					for( int i = 0; i < rawWords.length; i++ ) {
-						String rawWord = rawWords[ i ];
-						
-						// purify the word
-						int prefixLength = 0;
-						for( int j = 0; j < rawWord.length(); j++ ) {
-							// skip the heading symbols
-							if( rawWord.charAt( j ) < 'A' || rawWord.charAt( j ) > 'z' ) {
-								prefixLength++;
-							}
-							else break;
-						}
-						int suffixLength = 0;
-						for( int j = rawWord.length() - 1; j >= 0; j-- ) {
-							// skip the ending symbols
-							if( rawWord.charAt( j ) < 'A' || rawWord.charAt( j ) > 'z' ) {
-								suffixLength++;
-							}
-							else break;
-						}
-						// If the rawWord is full of symbols, skip to the next
-						if( prefixLength == rawWord.length() ) {
-							continue;
-						}
-						// get the purified word
-						String pw = rawWord.substring( prefixLength, rawWord.length() - suffixLength );
-						
-						recognizer.setCurrentWord( pw );
-						
-						// if it's new
-						if( recognizer.getResult() ) {
-							// if it has been met before in this article
-							if( containsSimilarString( items, pw ) ) {
-								int index = wordList.indexOf( new WordResult( pw ) );
-								WordResult word = wordList.get( index );
-								if( !sentences.equals( word.getSentences().get( word.getSentences().size() - 1 ) ) ) {
-									word.addSentences( sentences[ m ] + "." );
-								}
-								continue;
-							}
-							else {
-								items.add( pw );
-								WordResult word = new WordResult( pw );
-								word.setForms( recognizer.getPossibleForms() );
-								word.addSentences( sentences[ m ] + "." );
-								wordList.add( word );
-							}
-						}
-					}
+
 				}
 			}
 			
@@ -150,15 +101,7 @@ public class ShowWordActivity extends Activity {
     	return SharedMethods.sharedMenuEventHandler( item, this );
     }
 	
-	private static boolean containsSimilarString( List< String > list, String s ) {
-		for( int i = 0; i < list.size(); i++ ) {
-			String item = list.get( i ).toLowerCase();
-			if( item.equals( s.toLowerCase() ) ) {
-				return true;
-			}
-		}
-		return false;
-	}
+
 	
 	/**
 	 * A wrapper to represent the new word searching result.

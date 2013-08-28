@@ -1,8 +1,6 @@
 package me.horzwxy.wordservant;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Word list that contains all words I know.
@@ -43,14 +41,12 @@ public class WordLibrary {
 	}
 
     /**
-     * Create a word instance from its content and state. Then put it into library.
+     * Create a word instance from its content. Then put it into library.
      * @param word
-     * @param state
      * @return
      */
-    public Word createAndAdd( String word, WordState state ) {
-        Word wordInstance = new Word( word );
-        wordInstance.setState( state );
+    public Word createAndAdd( String word ) {
+        Word wordInstance = new Word( word, WordState.Untracked );
         library.put( word, wordInstance );
         return wordInstance;
     }
