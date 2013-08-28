@@ -10,18 +10,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.StringReader;
 import java.util.List;
 import java.util.ArrayList;
 
-import me.horzwxy.wordservant.GlobalInstance;
 import me.horzwxy.wordservant.Recognizer;
-import me.horzwxy.wordservant.Word;
 import me.horzwxy.wordservant.WordLibrary;
 
 public class ShowWordActivity extends Activity {
@@ -33,7 +29,7 @@ public class ShowWordActivity extends Activity {
 	public void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.show_word_list );
-		GlobalInstance.activities.add( ShowWordActivity.this );
+		SharedMethods.activities.add( ShowWordActivity.this );
 		
 		wordList = new ArrayList< WordResult >();
 		items = new ArrayList< String >();
@@ -42,7 +38,7 @@ public class ShowWordActivity extends Activity {
 		Bundle extras = intent.getExtras();
 		String article = extras.getString( "article" );
 		
-		WordLibrary lib = GlobalInstance.wordLib;
+		WordLibrary lib = SharedMethods.wordLib;
 		Recognizer recognizer = new Recognizer();
 		recognizer.setWordLibrary( lib );
 		
@@ -91,8 +87,8 @@ public class ShowWordActivity extends Activity {
 						// if it's new
 						if( recognizer.getResult() ) {
 							// if it has been met before in this article
-							if( items.contains( pw.toLowerCase() ) ) {
-								int index = wordList.indexOf( new WordResult( pw.toLowerCase() ) );
+							if( containsSimilarString( items, pw ) ) {
+								int index = wordList.indexOf( new WordResult( pw ) );
 								WordResult word = wordList.get( index );
 								if( !sentences.equals( word.getSentences().get( word.getSentences().size() - 1 ) ) ) {
 									word.addSentences( sentences[ m ] + "." );
@@ -100,7 +96,7 @@ public class ShowWordActivity extends Activity {
 								continue;
 							}
 							else {
-								items.add( pw.toLowerCase() );
+								items.add( pw );
 								WordResult word = new WordResult( pw );
 								word.setForms( recognizer.getPossibleForms() );
 								word.addSentences( sentences[ m ] + "." );
@@ -135,7 +131,7 @@ public class ShowWordActivity extends Activity {
 		listView.setOnItemClickListener( new OnItemClickListener() {
 			@Override
 			public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-				GlobalInstance.wordResult = wordList.get( position );
+				SharedMethods.wordResult = wordList.get( position );
 				Intent intent = new Intent( ShowWordActivity.this, WordResultInfoActivity.class );
 				startActivityForResult( intent, position );
 			}
@@ -151,8 +147,18 @@ public class ShowWordActivity extends Activity {
 	
 	@Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-    	return GlobalInstance.sharedMenuEventHandler( item, this );
+    	return SharedMethods.sharedMenuEventHandler( item, this );
     }
+	
+	private static boolean containsSimilarString( List< String > list, String s ) {
+		for( int i = 0; i < list.size(); i++ ) {
+			String item = list.get( i ).toLowerCase();
+			if( item.equals( s.toLowerCase() ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * A wrapper to represent the new word searching result.

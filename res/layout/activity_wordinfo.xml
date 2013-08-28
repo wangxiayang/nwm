@@ -12,6 +12,11 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:paddingLeft="20dp"/>
+    <TextView android:id="@+id/wordinfo_intime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingLeft="20dp"/>
     
     <Button android:id="@+id/wordinfo_alreadyKnown"
         android:layout_width="match_parent"

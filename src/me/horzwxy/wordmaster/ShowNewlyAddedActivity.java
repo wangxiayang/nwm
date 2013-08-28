@@ -1,21 +1,18 @@
 package me.horzwxy.wordmaster;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.Date;
+import java.util.List;
 
-import me.horzwxy.wordservant.GlobalInstance;
 import me.horzwxy.wordservant.Word;
-import me.horzwxy.wordservant.WordLibrary;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -33,8 +30,10 @@ public class ShowNewlyAddedActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		
-		GlobalInstance.activities.add( ShowNewlyAddedActivity.this );
-		list = new ArrayList< Word >( GlobalInstance.wordLib.getNewWordList().values() );
+		SharedMethods.activities.add( ShowNewlyAddedActivity.this );
+		list = new ArrayList< Word >( SharedMethods.wordLib.getNewWordList().values() );
+		sortByDate( list );
+		
 		ArrayList< String > items = new ArrayList< String >();
 		for( int i = 0; i < list.size(); i++ ) {
 			items.add( list.get( i ).getEnglishContent() );
@@ -45,7 +44,7 @@ public class ShowNewlyAddedActivity extends Activity {
 		listView.setOnItemClickListener( new OnItemClickListener() {
 			@Override
 			public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-				GlobalInstance.word = list.get( position );
+				SharedMethods.word = list.get( position );
 				Intent intent = new Intent( ShowNewlyAddedActivity.this, WordInfoActivity.class );
 				startActivityForResult( intent, position );
 			}
@@ -62,6 +61,23 @@ public class ShowNewlyAddedActivity extends Activity {
     
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-    	return GlobalInstance.sharedMenuEventHandler( item, this );
+    	return SharedMethods.sharedMenuEventHandler( item, this );
+    }
+    
+    private static void sortByDate( List< Word > list ) {
+    	for( int i = 0; i < list.size() - 1; i++ ) {
+    		for( int j = 0; j < list.size() - 1 - i; j++ ) {
+    			Word w1 = list.get( j );
+    			Word w2 = list.get( j + 1 );
+    			// if w1 comes into word list before w2
+    			if( w1.getIn_time().compareTo( w2.getIn_time() ) < 0 ) {
+    				// swap w2 and w1
+    				list.remove( j );
+    				list.remove( j );
+    				list.add( j, w1 );
+    				list.add( j, w2 );
+    			}
+    		}
+    	} 
     }
 }

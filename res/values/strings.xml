@@ -30,6 +30,7 @@
     <string name="wordresultinfo_submit">submit</string>
     <string name="wordresultinfo_ignore">ignore</string>
     <string name="wordresultinfo_alreadyKnown">I knew it!</string>
+    <string name="wordresultinfo_changeCase">upper/lower case</string>
     
     <!-- in WordInfoActivity -->
     <string name="wordinfo_alreadyKnown">I\'ve known it!</string>

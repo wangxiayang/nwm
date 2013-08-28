@@ -18,6 +18,11 @@
         android:layout_margin="10dp">
     </RadioGroup>
     
+    <Button android:id="@+id/wordresultinfo_changeCase"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/wordresultinfo_changeCase"/>
+    
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -31,7 +36,7 @@
 	        android:layout_height="wrap_content"
 	        android:text="@string/wordresultinfo_ignore"/>
 	    <Button android:id="@+id/wordresultinfo_alreadyKnown"
-	        android:layout_width="wrap_content"
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:text="@string/wordresultinfo_alreadyKnown"/>
     </LinearLayout>

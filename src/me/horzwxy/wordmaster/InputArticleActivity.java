@@ -1,7 +1,5 @@
 package me.horzwxy.wordmaster;
 
-import me.horzwxy.wordservant.GlobalInstance;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class InputArticleActivity extends Activity {
 	
@@ -19,7 +16,7 @@ public class InputArticleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_input_article );
-		GlobalInstance.activities.add( InputArticleActivity.this );
+        SharedMethods.activities.add( InputArticleActivity.this );
         
         Button submitButton = ( Button )findViewById( R.id.input_article_submit );
         submitButton.setOnClickListener( new OnClickListener() {
@@ -46,6 +43,6 @@ public class InputArticleActivity extends Activity {
     
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-    	return GlobalInstance.sharedMenuEventHandler( item, this );
+    	return SharedMethods.sharedMenuEventHandler( item, this );
     }
 }

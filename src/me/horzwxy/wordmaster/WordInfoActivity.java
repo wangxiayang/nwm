@@ -2,25 +2,14 @@ package me.horzwxy.wordmaster;
 
 import java.util.ArrayList;
 
-import me.horzwxy.wordmaster.ShowWordActivity.WordResult;
-import me.horzwxy.wordservant.GlobalInstance;
 import me.horzwxy.wordservant.Word;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class WordInfoActivity extends Activity {
 
@@ -28,12 +17,15 @@ public class WordInfoActivity extends Activity {
 	protected void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.activity_wordinfo );
-		GlobalInstance.activities.add( WordInfoActivity.this );
+		SharedMethods.activities.add( WordInfoActivity.this );
 		
-		Word word = GlobalInstance.word;
+		Word word = SharedMethods.word;
 		
 		TextView wordContentView = ( TextView )findViewById( R.id.wordinfo_word );
 		wordContentView.setText( word.getEnglishContent() );
+		
+		TextView wordIntimeView = ( TextView )findViewById( R.id.wordinfo_intime );
+		wordIntimeView.setText( word.getIn_time().toString() );
 		
 		ListView listView = ( ListView )findViewById( R.id.wordinfo_sentences );
 		ArrayList< String > items = word.getSentences();
@@ -50,6 +42,6 @@ public class WordInfoActivity extends Activity {
 	
 	@Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-    	return GlobalInstance.sharedMenuEventHandler( item, this );
+    	return SharedMethods.sharedMenuEventHandler( item, this );
     }
 }

@@ -15,82 +15,35 @@ import java.util.ArrayList;
  * The following forms are NOT treated as variants:
  * [1] -ly
  * [2] -tion, -sion
- * NOTICE: one word may match some forms independently, or together. For example, "classes'" first matches "-'s", then "-es".
+ * NOTICE: One word may match some forms independently, or together. For example, "classes'" first matches "-'s", then "-es".
  * The processing sequence is specially designed to properly deal with the TOGETHER case. So it'll find out the most ORIGINAL form.
  * The word library could be replaced. And it should be initialized with a certain WordLibrary instance before the first use.
  * 
  * @author horz
  *
  */
-public class Recognizer {
+public class WordRecognizer {
 	
 	private WordLibrary wordLib;
 	
-	private String currentWord;	// the word being processed
-	private boolean result;	// is the word new to me? 'false' means "it's new".
-	private ArrayList< String > possibleForms;	// the possible original forms of the word
-	
-	public Recognizer() {
-		this.wordLib = null;
-		
-		this.currentWord = null;
-		this.result = true;	// By default, every word is new.
-		this.possibleForms = null;
-	}
-	
-	/**
-	 * Set a new word library.
-	 * @param wordLib
-	 */
-	public void setWordLibrary( WordLibrary wordLib ) {
+	public WordRecognizer( WordLibrary wordLib ) {
 		this.wordLib = wordLib;
 	}
-	
-	/**
-	 * Set the current being processed word. The recognizer will start analyzing right after the method.
-	 * NOTICE: the method may be blocked if it's poorly implemented. Never try to read RESULT until this method returns.
-	 * @param word
-	 */
-	public void setCurrentWord( String word ) {
-		// every state must be reset
-		this.currentWord = word;
-		this.result = true;
-		this.possibleForms = null;
-		analyze();
-	}
-	
-	public String getCurrentWord() {
-		return this.currentWord;
-	}
-	
-	/**
-	 * Get the result whether it's a new word.
-	 */
-	public boolean getResult() {
-		return this.result;
-	}
-	
-	/**
-	 * Read out what possible original forms may be.
-	 * NOTICE: It's valid even the word is not a new one.
-	 * @return
-	 */
-	public ArrayList< String > getPossibleForms() {
-		return this.possibleForms;
-	}
-	
-	/**
-	 * A private method used to control the analyzing process.
-	 */
-	private void analyze() {
-		this.possibleForms =  findPossibleForms( getCurrentWord() );
+
+    /**
+     * A private method to guess the word's state.
+     * @param word
+     * @return
+     */
+	private WordState analyze( String word ) {
+		this.possibleForms = findPossibleForms( word );
 		for( String form: this.possibleForms ) {
-			// If the form is contained in the library, break the loop immediately.
+			// If one of the forms is tracked, break the loop immediately.
 			if( wordLib.contains( form ) ) {
-				this.result = false;	// mark the result
-				break;
+				return wordLib.getWordState( form );
 			}
 		}
+        return WordState.Untracked;
 	}
 	
 	/**
