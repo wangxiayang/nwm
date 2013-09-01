@@ -1,8 +1,5 @@
 package me.horzwxy.wordservant;
 
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * Created by horz on 8/28/13.
  */
@@ -10,20 +7,14 @@ public class SentenceAnalyzer {
 
     private WordLibrary wordLib;
     private WordRecognizer recognizer;
-    private TimeOrderedWordSet unfamiliarSet;
-    private TimeOrderedWordSet unrecognizedSet;
-    private TimeOrderedWordSet untrackedSet;
+    private WordTempStorage tempStorage;
 
     public SentenceAnalyzer( WordLibrary wordLib,
                              WordRecognizer recognizer,
-                             TimeOrderedWordSet unfamiliarSet,
-                             TimeOrderedWordSet unrecognizedSet,
-                             TimeOrderedWordSet untrackedSet ) {
+                             WordTempStorage tempStorage ) {
         this.wordLib = wordLib;
         this.recognizer = recognizer;
-        this.unfamiliarSet = unfamiliarSet;
-        this.unrecognizedSet = unrecognizedSet;
-        this.untrackedSet = untrackedSet;
+        this.tempStorage = tempStorage;
     }
 
     public void analyzeSentence( String sentence ) {
@@ -45,16 +36,16 @@ public class SentenceAnalyzer {
                 Word wordInstance = wordLib.getWord( pw );
                 wordInstance.addSentence( sentence );
                 if( state == WordState.Unfamiliar ) {
-                    unfamiliarSet.add( wordInstance );
+                    tempStorage.addToUnfamiliarSet( wordInstance );
                 }
                 else {
-                    unrecognizedSet.add( wordInstance );
+                    tempStorage.addToUnrecognizedSet( wordInstance );
                 }
             }
             else if( state == WordState.Untracked ) {
                 Word wordInstance = wordLib.createAndAdd( pw );
                 wordInstance.addSentence( sentence );
-                untrackedSet.add( wordInstance );
+                tempStorage.addToUnrecognizedSet( wordInstance );
             }
         }
     }

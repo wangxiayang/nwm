@@ -18,10 +18,14 @@ import java.util.List;
 import java.util.ArrayList;
 
 import me.horzwxy.wordservant.Recognizer;
+import me.horzwxy.wordservant.SentenceAnalyzer;
 import me.horzwxy.wordservant.WordLibrary;
+import me.horzwxy.wordservant.WordRecognizer;
 
-public class ShowWordActivity extends Activity {
-	
+public class ShowWordActivity extends WMActivity {
+
+    private SentenceAnalyzer sentenceAnalyzer;
+
 	private List< WordResult > wordList;
 	private List< String > items;
 	
@@ -29,18 +33,15 @@ public class ShowWordActivity extends Activity {
 	public void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.show_word_list );
-		SharedMethods.activities.add( ShowWordActivity.this );
-		
+		activities.add( this );
+
+        sentenceAnalyzer = new SentenceAnalyzer( wordLib, new WordRecognizer( wordLib ), tempStorage );
 		wordList = new ArrayList< WordResult >();
 		items = new ArrayList< String >();
 		
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
 		String article = extras.getString( "article" );
-		
-		WordLibrary lib = SharedMethods.wordLib;
-		Recognizer recognizer = new Recognizer();
-		recognizer.setWordLibrary( lib );
 		
 		try {
 			BufferedReader br = new BufferedReader( new StringReader( article ) );
@@ -54,7 +55,7 @@ public class ShowWordActivity extends Activity {
 				
 				String[] sentences = line.split( "[\\.\\?!]" );
 				for( int m = 0; m < sentences.length; m++ ) {
-
+                    sentenceAnalyzer.analyzeSentence( sentences[ m ] );
 				}
 			}
 			
@@ -82,27 +83,13 @@ public class ShowWordActivity extends Activity {
 		listView.setOnItemClickListener( new OnItemClickListener() {
 			@Override
 			public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-				SharedMethods.wordResult = wordList.get( position );
 				Intent intent = new Intent( ShowWordActivity.this, WordResultInfoActivity.class );
+                intent.putExtra( "word", wordList.get( position ).getContent() );
 				startActivityForResult( intent, position );
 			}
 		} );
 	}
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-	
-	@Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-    	return SharedMethods.sharedMenuEventHandler( item, this );
-    }
-	
 
-	
 	/**
 	 * A wrapper to represent the new word searching result.
 	 * @author horz

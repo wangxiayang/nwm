@@ -10,13 +10,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class InputArticleActivity extends Activity {
+public class InputArticleActivity extends WMActivity {
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_input_article );
-        SharedMethods.activities.add( InputArticleActivity.this );
+        activities.add( InputArticleActivity.this );
         
         Button submitButton = ( Button )findViewById( R.id.input_article_submit );
         submitButton.setOnClickListener( new OnClickListener() {
@@ -31,18 +31,5 @@ public class InputArticleActivity extends Activity {
         		startActivity( intent );
         	}
         } );
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-    	return SharedMethods.sharedMenuEventHandler( item, this );
     }
 }

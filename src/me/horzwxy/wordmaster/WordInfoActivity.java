@@ -11,18 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class WordInfoActivity extends Activity {
+public class WordInfoActivity extends WMActivity {
 
 	@Override
 	protected void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.activity_wordinfo );
-		SharedMethods.activities.add( WordInfoActivity.this );
-		
-		Word word = SharedMethods.word;
+		activities.add( this );
+
+        String wordContent = "" + getIntent().getCharSequenceExtra( "word" );
+		Word word = wordLib.getWord( wordContent );
 		
 		TextView wordContentView = ( TextView )findViewById( R.id.wordinfo_word );
-		wordContentView.setText( word.getEnglishContent() );
+		wordContentView.setText( wordContent );
 		
 		TextView wordIntimeView = ( TextView )findViewById( R.id.wordinfo_intime );
 		wordIntimeView.setText( word.getIn_time().toString() );
@@ -32,16 +33,4 @@ public class WordInfoActivity extends Activity {
 		
 		listView.setAdapter( new ArrayAdapter< String >( this, android.R.layout.simple_list_item_1, items ) );
 	}
-
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-	
-	@Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-    	return SharedMethods.sharedMenuEventHandler( item, this );
-    }
 }

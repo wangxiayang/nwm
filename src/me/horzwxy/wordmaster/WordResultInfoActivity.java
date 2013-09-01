@@ -21,7 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WordResultInfoActivity extends Activity {
+public class WordResultInfoActivity extends WMActivity {
 	
 	private RadioGroup rbg;
 	private List< String > forms;

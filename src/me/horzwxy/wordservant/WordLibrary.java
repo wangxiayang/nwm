@@ -1,5 +1,6 @@
 package me.horzwxy.wordservant;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -46,8 +47,56 @@ public class WordLibrary {
      * @return
      */
     public Word createAndAdd( String word ) {
-        Word wordInstance = new Word( word, WordState.Untracked );
+        Word wordInstance = new Word( word, WordState.Unrecognized );
         library.put( word, wordInstance );
         return wordInstance;
+    }
+
+    public void addWord( String content, Word word ) {
+        library.put( content, word );
+    }
+
+    public ArrayList< String > getBasicWords() {
+        ArrayList<String> result = new ArrayList<String>();
+        ArrayList< Word > words = new ArrayList<Word>( library.values() );
+        for( Word word : words ) {
+            if( word.getState() == WordState.Basic ) {
+                result.add( word.getContent() );
+            }
+        }
+        return result;
+    }
+
+    public ArrayList< String > getIgnoredWords() {
+        ArrayList<String> result = new ArrayList<String>();
+        ArrayList< Word > words = new ArrayList<Word>( library.values() );
+        for( Word word : words ) {
+            if( word.getState() == WordState.Ignored ) {
+                result.add( word.getContent() );
+            }
+        }
+        return result;
+    }
+
+    public ArrayList< Word > getUnfamiliarWords() {
+        ArrayList<Word> result = new ArrayList<Word>();
+        ArrayList< Word > words = new ArrayList<Word>( library.values() );
+        for( Word word : words ) {
+            if( word.getState() == WordState.Unfamiliar ) {
+                result.add( word );
+            }
+        }
+        return result;
+    }
+
+    public ArrayList< Word > getUnrecognizedWords() {
+        ArrayList<Word> result = new ArrayList<Word>();
+        ArrayList< Word > words = new ArrayList<Word>( library.values() );
+        for( Word word : words ) {
+            if( word.getState() == WordState.Unrecognized ) {
+                result.add( word );
+            }
+        }
+        return result;
     }
 }

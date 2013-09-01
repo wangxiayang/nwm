@@ -11,6 +11,13 @@ public class Word implements Comparable< Word >, Serializable {
 	private Date in_time;
     private WordState state;
 
+    public Word() {
+        this.content = null;
+        this.in_time = null;
+        this.state = WordState.Untracked;
+        this.sentences = new ArrayList<String>();
+    }
+
 	public Word( String content, WordState state ) {
 		this.setContent(content);
 		this.sentences = new ArrayList< String >();
@@ -45,6 +52,10 @@ public class Word implements Comparable< Word >, Serializable {
 	public Date getIn_time() {
 		return in_time;
 	}
+
+    public void setIn_time( Date date ) {
+        this.in_time = date;
+    }
 
     public WordState getState() {
         return state;
